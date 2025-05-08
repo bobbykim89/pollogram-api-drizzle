@@ -1,4 +1,8 @@
 {
   "version": 2,
-  "rewrites": [{ "source": "/(.*)", "destination": "/dist" }]
+  "functions": {
+    "api/handler.js": {
+      "runtime": "mpdejs22.x"
+    }
+  }
 }
