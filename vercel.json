@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "api/handler.js": {
-      "runtime": "mpdejs22.x"
+      "runtime": "nodejs22.x"
     }
   }
 }
