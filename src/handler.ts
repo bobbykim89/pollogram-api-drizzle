@@ -1,5 +1,5 @@
-import { handle } from "hono/vercel";
-import { bootstrap } from "./index";
+import { handle } from 'hono/vercel'
+import { bootstrap } from './index'
 
-const app = bootstrap();
-export const handler = handle(app);
+const app = bootstrap()
+export default handle(app)
