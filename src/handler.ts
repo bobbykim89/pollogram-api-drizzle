@@ -4,5 +4,12 @@ import { bootstrap } from './index'
 
 const app = bootstrap()
 
-// export default app
-export default handle(app)
+const handler = handle(app)
+
+// export default handle(app)
+export const GET = handler
+export const POST = handler
+export const PATCH = handler
+export const PUT = handler
+export const DELETE = handler
+export const OPTIONS = handler
