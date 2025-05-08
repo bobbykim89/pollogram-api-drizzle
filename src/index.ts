@@ -1,19 +1,20 @@
-import { Hono } from "hono";
-import { prettyJSON } from "hono/pretty-json";
-import { appendTrailingSlash } from "hono/trailing-slash";
+import { Hono } from 'hono'
+import { prettyJSON } from 'hono/pretty-json'
+import { appendTrailingSlash } from 'hono/trailing-slash'
 
 export const bootstrap = () => {
-  const app = new Hono();
+  const app = new Hono()
   app
+    .basePath('/api')
     .use(prettyJSON())
     .use(appendTrailingSlash())
-    .get("/", (c) => {
+    .get('/', (c) => {
       return c.json(
         {
-          message: "Hello from pollito!",
+          message: 'Hello from pollito!',
         },
         200
-      );
-    });
-  return app;
-};
+      )
+    })
+  return app
+}
