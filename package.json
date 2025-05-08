@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:local": "dotenv -e .env.local -- tsx ./src/server.ts",
     "dev:watch:local": "dotenv -e .env.local -- tsx watch ./src/server.ts",
-    "build:local": "esbuild ./src/handler.ts --bundle --platform=node --format=esm --outfile=dist/app.js",
-    "build": "esbuild ./src/handler.ts --bundle --platform=node --format=esm --outfile=dist/app.js",
+    "build:local": "esbuild ./src/handler.ts --bundle --platform=node --format=esm --outfile=dist/index.js",
+    "build": "esbuild ./src/handler.ts --bundle --platform=node --format=esm --outfile=dist/index.js",
     "serve:dist": "node ./dist/index.js"
   },
   "keywords": [],
