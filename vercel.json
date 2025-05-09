@@ -2,8 +2,12 @@
   "rewrites": [
     {
       "source": "/api(.*)",
-      "destination": "/api/index"
+      "destination": "/api"
     }
   ],
-  "redirects": [{ "source": "/", "destination": "/api", "permanent": false }]
+  "functions": {
+    "api/index.ts": {
+      "runtime": "edge"
+    }
+  }
 }
