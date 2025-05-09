@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "lib": ["es2020", "dom"],
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["es2022", "dom"],
     "declaration": true,
     "strict": true,
     "noImplicitAny": true,
@@ -21,8 +22,5 @@
     "baseUrl": "."
   },
   "include": ["src/**/*.ts"],
-  "ts-node": {
-    "files": true
-  },
   "exclude": ["node_modules"]
 }

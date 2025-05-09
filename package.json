@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:local": "dotenv -e .env.local -- tsx ./src/server.ts",
     "dev:watch:local": "dotenv -e .env.local -- tsx watch ./src/server.ts",
-    "build:local": "esbuild ./src/handler.ts --bundle --platform=node --format=esm --outfile=api/index.js",
-    "build": "esbuild ./src/handler.ts --bundle --platform=node --format=esm --outfile=api/index.js",
-    "serve:dist": "node ./dist/index.js"
+    "build:local": "esbuild ./src/handler.ts --bundle --platform=node --format=esm --target=es2022 --outfile=api/index.mjs",
+    "build": "esbuild ./src/handler.ts --bundle --platform=node --format=esm --target=es2022 --outfile=api/index.mjs",
+    "serve:dist": "node ./dist/index.mjs"
   },
   "keywords": [],
   "author": "",
