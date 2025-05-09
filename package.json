@@ -2,13 +2,13 @@
   "name": "pollogram-hono-drizzle",
   "version": "1.0.0",
   "main": "api/index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:local": "dotenv -e .env.local -- tsx ./src/server.ts",
     "dev:watch:local": "dotenv -e .env.local -- tsx watch ./src/server.ts",
     "build:local": "esbuild ./src/handler.ts --bundle --platform=node --format=esm --outfile=api/index.js",
-    "build": "esbuild ./src/handler.ts --bundle --platform=node --outfile=api/index.js",
+    "build": "esbuild ./src/handler.ts --bundle --platform=node --format=esm --outfile=api/index.js",
     "serve:dist": "node ./dist/index.js"
   },
   "keywords": [],
