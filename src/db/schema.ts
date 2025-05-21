@@ -40,26 +40,122 @@ export const commentTable = pgTable('comments', {
   createdAt: t.timestamp('created_at').defaultNow(),
 })
 
-// relationship between userTable and profileTable
-export const userToProfileRelations = relations(usersTable, ({ one }) => ({
+// follow/like relations
+
+export const follow = pgTable(
+  'follow',
+  {
+    followedById: t
+      .integer('followed_by_id')
+      .notNull()
+      .references(() => profileTable.id, { onDelete: 'cascade' }),
+    followingId: t
+      .integer('following_id')
+      .notNull()
+      .references(() => profileTable.id, { onDelete: 'cascade' }),
+  },
+  (table) => [
+    t.primaryKey({ columns: [table.followingId, table.followedById] }),
+  ]
+)
+
+export const postLike = pgTable(
+  'post_like',
+  {
+    profileId: t
+      .integer('profile_id')
+      .notNull()
+      .references(() => profileTable.id, { onDelete: 'cascade' }),
+    postId: t
+      .integer('post_id')
+      .notNull()
+      .references(() => postTable.id, { onDelete: 'cascade' }),
+  },
+  (table) => [t.primaryKey({ columns: [table.profileId, table.postId] })]
+)
+
+export const commentLike = pgTable(
+  'comment_like',
+  {
+    profileId: t
+      .integer('profile_id')
+      .notNull()
+      .references(() => profileTable.id, { onDelete: 'cascade' }),
+    commentId: t
+      .integer('comment_id')
+      .notNull()
+      .references(() => commentTable.id, { onDelete: 'cascade' }),
+  },
+  (table) => [t.primaryKey({ columns: [table.profileId, table.commentId] })]
+)
+
+// relationship between tables
+export const userRelations = relations(usersTable, ({ one }) => ({
   profile: one(profileTable),
 }))
-
-export const profileToUserRelations = relations(profileTable, ({ one }) => ({
+export const profileRelations = relations(profileTable, ({ one, many }) => ({
   user: one(usersTable, {
     fields: [profileTable.userId],
     references: [usersTable.id],
   }),
-}))
-
-// relationship between profileTable and postTable
-export const profileToPostRelations = relations(profileTable, ({ many }) => ({
   posts: many(postTable),
+  comments: many(commentTable),
+  following: many(follow),
+  followedBy: many(follow),
+  likedPosts: many(postLike),
+  likedComments: many(commentLike),
 }))
 
-export const postToProfileRelations = relations(postTable, ({ one }) => ({
+export const postRelations = relations(postTable, ({ one, many }) => ({
   userProfile: one(profileTable, {
     fields: [postTable.profileId],
     references: [profileTable.id],
+  }),
+  comments: many(commentTable),
+  likedBy: many(postLike),
+}))
+
+export const commentRelations = relations(commentTable, ({ one, many }) => ({
+  userProfile: one(profileTable, {
+    fields: [commentTable.profileId],
+    references: [profileTable.id],
+  }),
+  post: one(postTable, {
+    fields: [commentTable.postId],
+    references: [postTable.id],
+  }),
+  likedBy: many(commentLike),
+}))
+
+export const followRelations = relations(follow, ({ one }) => ({
+  followedBy: one(profileTable, {
+    fields: [follow.followedById],
+    references: [profileTable.id],
+  }),
+  following: one(profileTable, {
+    fields: [follow.followingId],
+    references: [profileTable.id],
+  }),
+}))
+
+export const postLikeRelations = relations(postLike, ({ one }) => ({
+  profile: one(profileTable, {
+    fields: [postLike.profileId],
+    references: [profileTable.id],
+  }),
+  likedPost: one(postTable, {
+    fields: [postLike.postId],
+    references: [postTable.id],
+  }),
+}))
+
+export const commentLikeRelations = relations(commentLike, ({ one }) => ({
+  profile: one(profileTable, {
+    fields: [commentLike.profileId],
+    references: [profileTable.id],
+  }),
+  likedComment: one(commentTable, {
+    fields: [commentLike.commentId],
+    references: [commentTable.id],
   }),
 }))
