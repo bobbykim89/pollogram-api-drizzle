@@ -8,9 +8,9 @@ export const usersTable = pgTable('users', {
   id: t.integer('id').primaryKey().notNull().generatedAlwaysAsIdentity(),
   email: t.varchar('email', { length: 256 }).notNull().unique(),
   password: t.text('password').notNull(),
-  role: userRoles().default('USER'),
-  createdAt: t.timestamp('created_at').defaultNow(),
-  updatedAt: t.timestamp('updated_at').defaultNow(),
+  role: userRoles().default('USER').notNull(),
+  createdAt: t.timestamp('created_at').defaultNow().notNull(),
+  updatedAt: t.timestamp('updated_at').defaultNow().notNull(),
 })
 
 export const profileTable = pgTable('profiles', {
@@ -18,26 +18,38 @@ export const profileTable = pgTable('profiles', {
   username: t.varchar('user_name', { length: 256 }).notNull().unique(),
   imageId: t.varchar('image_id', { length: 256 }),
   profileDescription: t.text('profile_description'),
-  userId: t.integer('user_id').references(() => usersTable.id),
-  createdAt: t.timestamp('created_at').defaultNow(),
-  updatedAt: t.timestamp('updated_at').defaultNow(),
+  userId: t
+    .integer('user_id')
+    .references(() => usersTable.id)
+    .notNull(),
+  createdAt: t.timestamp('created_at').defaultNow().notNull(),
+  updatedAt: t.timestamp('updated_at').defaultNow().notNull(),
 })
 
 export const postTable = pgTable('posts', {
   id: t.integer('id').primaryKey().notNull().generatedAlwaysAsIdentity(),
   text: t.text('text'),
-  imageId: t.varchar('image_id', { length: 256 }),
-  profileId: t.integer('profile_id').references(() => profileTable.id),
-  createdAt: t.timestamp('created_at').defaultNow(),
-  updatedAt: t.timestamp('updated_at').defaultNow(),
+  imageId: t.varchar('image_id', { length: 256 }).notNull(),
+  profileId: t
+    .integer('profile_id')
+    .references(() => profileTable.id)
+    .notNull(),
+  createdAt: t.timestamp('created_at').defaultNow().notNull(),
+  updatedAt: t.timestamp('updated_at').defaultNow().notNull(),
 })
 
 export const commentTable = pgTable('comments', {
   id: t.integer('id').primaryKey().notNull().generatedAlwaysAsIdentity(),
-  text: t.text('text'),
-  profileId: t.integer('profile_id').references(() => profileTable.id),
-  postId: t.integer('post_id').references(() => postTable.id),
-  createdAt: t.timestamp('created_at').defaultNow(),
+  text: t.text('text').notNull(),
+  profileId: t
+    .integer('profile_id')
+    .references(() => profileTable.id)
+    .notNull(),
+  postId: t
+    .integer('post_id')
+    .references(() => postTable.id)
+    .notNull(),
+  createdAt: t.timestamp('created_at').defaultNow().notNull(),
 })
 
 // follow/like relations

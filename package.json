@@ -5,12 +5,16 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:local": "dotenv -e .env.local -- tsx ./src/server.ts",
-    "dev:watch:local": "dotenv -e .env.local -- tsx watch ./src/server.ts",
+    "dev:dev": "dotenv -e .env -e .env.dev -- tsx ./src/server.ts",
+    "dev:prod": "dotenv -e .env -e .env.prod -- tsx ./src/server.ts",
+    "dev:watch:dev": "dotenv -e .env -e .env.dev -- tsx watch ./src/server.ts",
+    "dev:watch:prod": "dotenv -e .env -e .env.prod -- tsx watch ./src/server.ts",
     "build:local": "esbuild src/handler.ts --bundle --platform=node --format=esm --target=es2022 --outfile=api/index.js",
     "dev:vercel": "vercel dev",
     "build": "esbuild src/handler.ts --bundle --platform=node --format=esm --target=es2022 --outfile=api/index.js",
-    "serve:dist": "node ./dist/index.mjs"
+    "serve:dist": "node ./dist/index.mjs",
+    "generate:schema": "drizzle-kit generate --config=drizzle.config.ts",
+    "db:prod:migrate": "dotenv -e .env -e .env.prod -- tsx ./src/db/migrate.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,11 +23,10 @@
   "devDependencies": {
     "@hono/node-server": "^1.14.1",
     "@types/node": "^22.15.17",
+    "@types/ws": "^8.18.1",
     "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.31.1",
     "esbuild": "^0.25.4",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "vercel": "^41.7.3"
@@ -35,6 +38,7 @@
     "cloudinary": "^2.6.1",
     "drizzle-orm": "^0.43.1",
     "hono": "^4.7.8",
+    "ws": "^8.18.2",
     "zod": "^3.24.4"
   }
 }
