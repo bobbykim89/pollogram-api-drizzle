@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { prettyJSON } from 'hono/pretty-json'
 import { appendTrailingSlash } from 'hono/trailing-slash'
 import { userModule } from './user/user.module'
+import { authModule } from './auth/auth.module'
 
 export const bootstrap = () => {
   const app = new Hono()
@@ -19,5 +20,6 @@ export const bootstrap = () => {
       )
     })
     .route('/user/', userModule.setRoute())
+    .route('/auth/', authModule.setRoute())
   return app
 }
