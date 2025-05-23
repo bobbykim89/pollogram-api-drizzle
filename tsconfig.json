@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "lib": ["es2022", "dom"],
+    "module": "CommonJS",
+    "lib": ["ES2022", "dom"],
     "declaration": true,
     "strict": true,
-    "esModuleInterop": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noImplicitThis": true,
@@ -22,6 +20,9 @@
     "typeRoots": ["./node_modules/@types"],
     "baseUrl": "."
   },
-  "include": ["src/**/*.ts", "app/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "bin/**/*.ts", "lib/**/*.ts"],
+  "ts-node": {
+    "files": true
+  },
+  "exclude": ["node_modules", "cdk.out"]
 }

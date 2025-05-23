@@ -1,40 +1,63 @@
 {
   "name": "pollogram-hono-drizzle",
   "version": "1.0.0",
-  "main": "api/index.js",
-  "type": "module",
+  "description": "Pollogram-API-Serverless-Hono is a backend API for an Instagram clone project, designed using Hono and Drizzle ORM. Project is deployed on AWS Lambda using AWS-CDK as its IAS. It provides endpoints to manage users, profiles, posts, and comments.",
+  "author": {
+    "name": "Bobby Kim",
+    "url": "https://www.devbobbykim.com/",
+    "email": "bobby.sihun.kim@gmail.com"
+  },
+  "repository": {
+    "url": "https://github.com/bobbykim89/pollogram-api-drizzle.git",
+    "type": "git"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
     "dev:dev": "dotenv -e .env -e .env.dev -- tsx ./src/server.ts",
     "dev:prod": "dotenv -e .env -e .env.prod -- tsx ./src/server.ts",
     "dev:watch:dev": "dotenv -e .env -e .env.dev -- tsx watch ./src/server.ts",
     "dev:watch:prod": "dotenv -e .env -e .env.prod -- tsx watch ./src/server.ts",
-    "build:local": "esbuild src/handler.ts --bundle --platform=node --format=esm --target=es2022 --outfile=api/index.js",
-    "dev:vercel": "vercel dev",
-    "build": "esbuild src/handler.ts --bundle --platform=node --format=esm --target=es2022 --outfile=api/index.js",
-    "serve:dist": "node ./dist/index.mjs",
     "generate:schema": "drizzle-kit generate --config=drizzle.config.ts",
-    "db:prod:migrate": "dotenv -e .env -e .env.prod -- tsx ./src/db/migrate.ts"
+    "db:dev:migrate": "dotenv -e .env -e .env.dev -- tsx ./src/db/migrate.ts",
+    "db:prod:migrate": "dotenv -e .env -e .env.prod -- tsx ./src/db/migrate.ts",
+    "build:local": "esbuild src/handler.ts --bundle --platform=node --format=esm --target=es2022 --outfile=api/index.js",
+    "cdk:bootstrap": "dotenv -e .env -- cdk bootstrap",
+    "cdk:deploy:prod": "dotenv -e .env -e .env.prod -- cdk deploy Prod/*",
+    "cdk:destroy:prod": "dotenv -e .env -e .env.prod -- cdk destroy Prod/*",
+    "cdk:deploy:dev": "dotenv -e .env -e .env.dev -- cdk deploy Dev/*",
+    "dck:destroy:dev": "dotenv -e .env -e .env.dev -- cdk destroy Dev/*",
+    "ga:deploy:prod": "cdk deploy Prod/* --require-approval never",
+    "ga:deploy:dev": "cdk deploy Dev/* --require-approval never"
+  },
+  "bin": {
+    "hello-cdk": "bin/hello-cdk.js"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "@hono/node-server": "^1.14.1",
+    "@types/jest": "^29.5.14",
     "@types/node": "^22.15.17",
     "@types/ws": "^8.18.1",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "aws-cdk": "2.1016.1",
     "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.31.1",
     "esbuild": "^0.25.4",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3",
-    "vercel": "^41.7.3"
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.5.0",
     "@neondatabase/serverless": "^1.0.0",
+    "aws-cdk-lib": "2.196.0",
     "bcryptjs": "^3.0.2",
+    "constructs": "^10.0.0",
     "cloudinary": "^2.6.1",
     "drizzle-orm": "^0.43.1",
     "hono": "^4.7.8",
