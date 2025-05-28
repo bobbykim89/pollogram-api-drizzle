@@ -9,7 +9,7 @@ import { postModule } from './post/post.module'
 export const bootstrap = () => {
   const app = new Hono()
   app
-    .basePath('/api')
+    .basePath('/api/')
     .use(prettyJSON())
     .use(appendTrailingSlash())
     .get('/', (c) => {
