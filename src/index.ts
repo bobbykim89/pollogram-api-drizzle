@@ -5,6 +5,7 @@ import { userModule } from './user/user.module'
 import { authModule } from './auth/auth.module'
 import { profileModule } from './profile/profile.module'
 import { postModule } from './post/post.module'
+import { commentModule } from './comment/comment.module'
 
 export const bootstrap = () => {
   const app = new Hono()
@@ -25,5 +26,6 @@ export const bootstrap = () => {
     .route('/auth/', authModule.setRoute())
     .route('/profile/', profileModule.setRoute())
     .route('/post/', postModule.setRoute())
+    .route('/comment/', commentModule.setRoute())
   return app
 }

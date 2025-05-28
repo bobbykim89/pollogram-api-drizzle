@@ -32,7 +32,7 @@ export const postTable = pgTable('posts', {
   imageId: t.varchar('image_id', { length: 256 }).notNull(),
   profileId: t
     .integer('profile_id')
-    .references(() => profileTable.id)
+    .references(() => profileTable.id, { onDelete: 'cascade' })
     .notNull(),
   createdAt: t.timestamp('created_at').defaultNow().notNull(),
   updatedAt: t.timestamp('updated_at').defaultNow().notNull(),
@@ -43,11 +43,11 @@ export const commentTable = pgTable('comments', {
   text: t.text('text').notNull(),
   profileId: t
     .integer('profile_id')
-    .references(() => profileTable.id)
+    .references(() => profileTable.id, { onDelete: 'cascade' })
     .notNull(),
   postId: t
     .integer('post_id')
-    .references(() => postTable.id)
+    .references(() => postTable.id, { onDelete: 'cascade' })
     .notNull(),
   createdAt: t.timestamp('created_at').defaultNow().notNull(),
 })

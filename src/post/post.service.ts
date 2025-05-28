@@ -49,7 +49,21 @@ export class PostService extends BaseService {
         }
       )
       if (!currentUserProfile) throw ctx.json({ message: 'Not found' }, 404)
-      ctx.json(body, 201)
+      const cloudinaryRes = await this.useMultipartData.uploadCloudinary(
+        ctx,
+        body['image'],
+        'post'
+      )
+      const bodyText: string =
+        typeof body['text'] === 'string' ? body['text'] : ''
+      if (!cloudinaryRes)
+        throw ctx.json({ message: 'Failed to upload image.' }, 408)
+      await this.client.insert(this.schema.postTable).values({
+        profileId: currentUserProfile.id,
+        imageId: cloudinaryRes.image_id,
+        text: bodyText,
+      })
+      return ctx.json({ message: 'Successfully created a new post' }, 201)
     } catch (error) {
       throw ctx.json({ message: 'Internal server error' }, 500)
     }

@@ -23,17 +23,16 @@
     "generate:schema": "drizzle-kit generate --config=drizzle.config.ts",
     "db:dev:migrate": "dotenv -e .env -e .env.dev -- tsx ./src/db/migrate.ts",
     "db:prod:migrate": "dotenv -e .env -e .env.prod -- tsx ./src/db/migrate.ts",
-    "build:local": "esbuild src/handler.ts --bundle --platform=node --format=esm --target=es2022 --outfile=api/index.js",
-    "cdk:bootstrap": "dotenv -e .env -- cdk bootstrap",
+    "cdk:bootstrap": "cdk bootstrap",
     "cdk:deploy:prod": "dotenv -e .env -e .env.prod -- cdk deploy Prod/*",
     "cdk:destroy:prod": "dotenv -e .env -e .env.prod -- cdk destroy Prod/*",
     "cdk:deploy:dev": "dotenv -e .env -e .env.dev -- cdk deploy Dev/*",
-    "dck:destroy:dev": "dotenv -e .env -e .env.dev -- cdk destroy Dev/*",
+    "cdk:destroy:dev": "dotenv -e .env -e .env.dev -- cdk destroy Dev/*",
     "ga:deploy:prod": "cdk deploy Prod/* --require-approval never",
     "ga:deploy:dev": "cdk deploy Dev/* --require-approval never"
   },
   "bin": {
-    "hello-cdk": "bin/hello-cdk.js"
+    "pollogram-hono-drizzle": "bin/pollogram-hono-drizzle.js"
   },
   "keywords": [],
   "license": "ISC",
