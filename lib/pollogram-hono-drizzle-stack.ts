@@ -13,13 +13,19 @@ export class PollogramHonoDrizzleStack extends cdk.Stack {
       runtime: Runtime.NODEJS_22_X,
       entry: 'src/handler.ts',
       handler: 'handler',
+      memorySize: 256,
       environment: {
         NODE_ENV: 'production',
-        DATABASE_URL: process.env.DATABASE_URL || '',
+        DATABASE_URL: process.env.DATABASE_URL!,
+        ADMIN_SECRET_PHRASE: process.env.ADMIN_SECRET_PHRASE!,
+        JWT_SECRET: process.env.JWT_SECRET!,
+        CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME!,
+        CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY!,
+        CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET!,
+        CLOUDINARY_TARGET_FOLDER: process.env.CLOUDINARY_TARGET_FOLDER!,
       },
       timeout: cdk.Duration.seconds(10),
       bundling: {
-        nodeModules: [],
         minify: true,
         forceDockerBundling: false,
       },
@@ -32,6 +38,7 @@ export class PollogramHonoDrizzleStack extends cdk.Stack {
     new LambdaRestApi(this, 'PollogramHonoDrizzleApiGateway', {
       handler: alias,
       proxy: true,
+      binaryMediaTypes: ['multipart/form-data', '*/*'],
       deployOptions: {
         stageName: stage,
         cachingEnabled: true,

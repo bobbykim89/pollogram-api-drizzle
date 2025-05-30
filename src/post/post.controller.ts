@@ -37,6 +37,12 @@ export class PostController {
         }),
         async (c) => {
           const body = c.req.valid('form')
+          // const form = await c.req.formData()
+          // const formattedBody = {
+          //   image: form.get('image') as File,
+          //   text: form.get('text') as string,
+          // }
+          // console.log('formatted body', formattedBody)
           const user = c.get('currentUser')
           return await this.postService.createPost(c, user, body)
         }

@@ -65,7 +65,7 @@ export class PostService extends BaseService {
       })
       return ctx.json({ message: 'Successfully created a new post' }, 201)
     } catch (error) {
-      throw ctx.json({ message: 'Internal server error', error }, 500)
+      throw ctx.json({ message: 'Internal server error' }, 500)
     }
   }
   public deletePost = async (

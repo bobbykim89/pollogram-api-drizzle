@@ -21,8 +21,9 @@ export class UseMultipartData {
     folder: string
   ) => {
     try {
-      if (typeof arg === 'string') return
-      const allowedType: string[] = ['image/jpeg', 'image/jpg', 'image/png']
+      if (!arg || !(arg instanceof File) || arg.size === 0)
+        throw ctx.json({ message: 'Invalid file ' })
+      const allowedType: string[] = ['image/jpeg', 'image/png', 'image/webp']
       if (allowedType.includes(arg.type) === false)
         throw ctx.json({ message: 'Not acceptable' }, 406)
       const bytearrayBuffer = await arg.arrayBuffer()
@@ -30,10 +31,13 @@ export class UseMultipartData {
       const dataUrl = `data:${arg.type};base64,${base64Encoded}`
       const { public_id } = await this.cloudinarySdk.uploader.upload(dataUrl, {
         folder: `${this.config.cloudinaryTargetFolder}/${folder}`,
+        resource_type: 'image',
+        allowed_formats: ['jpg', 'png', 'webp'],
       })
       return { image_id: public_id }
     } catch (error) {
-      throw ctx.json({ message: 'Internal server error.' }, 500)
+      console.error(error)
+      throw ctx.json({ message: 'Failed to upload file to cloudinary' }, 500)
     }
   }
   public deleteCloudinaryImage = async (id: string) => {
